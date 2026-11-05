@@ -1,78 +1,85 @@
 # Password Generator
 
-A tool for generating passwords with configurable length and character options.
-
-> **Project status:** This repository currently contains documentation only. Replace the
-> placeholders below with details that match the implementation before publishing it.
+A Windows-style desktop app for generating passwords, checking their estimated
+strength, and optionally saving them with an app or site name.
 
 ## Features
 
-- [Describe the supported platforms and interface.]
-- [Describe password length and character-set options.]
-- [Describe any passphrase, strength, or history features, if available.]
-- [Explain whether passwords stay on the user's device.]
+- Generate passwords using letters, digits, punctuation, or any combination.
+- Include at least one character from every selected character type.
+- Choose a preset length or enter a custom length from 1 to 128 characters.
+- Check the strength of a generated or manually entered password.
+- Show an approximate offline brute-force time.
+- Reveal or mask the password and copy it to the clipboard.
+- Optionally save a password with its app or site name in a local text file.
 
-## Getting started
+## Requirements
 
-### Requirements
+- Windows
+- Python 3.9 or later with Tkinter available
 
-- [Runtime, framework, or platform and supported version]
+The app uses only Python's standard library; no third-party packages are
+required.
 
-### Install
+## Run the app
 
-```text
-[Add the project's installation or setup command.]
+Open PowerShell in the project folder and run:
+
+```powershell
+python src\src\main.py
 ```
 
-### Run
+If `python` is not recognized, try `py src\src\main.py` or install Python and
+ensure the Python launcher is available.
+
+## Use
+
+1. Choose a preset or enter a password length from 1 to 128.
+2. Select one or more character types: letters, digits, and/or punctuation.
+3. Select **Generate password**. The app creates a password and displays its
+   strength and estimated cracking time.
+4. Optionally edit the password field to check another password, toggle
+   **Show**, or select **Copy password**.
+5. To save it, enter the app or site name and select **Save password**.
+
+The selected password length must be at least the number of selected character
+types, so every selected type can be included.
+
+## Password storage warning
+
+Saving is optional. When you select **Save password**, the app appends one JSON
+record per line to:
 
 ```text
-[Add the command or steps to launch the application.]
+saved_passwords\passwords.txt
 ```
 
-## Usage
+This file is **unencrypted plain text**. Anyone who can access the file, the
+project folder, or a copy or backup of it can read the saved passwords. The
+`saved_passwords` folder is listed in `.gitignore` to help prevent accidental
+Git commits, but this does not protect the file on your computer. For real
+credentials, use a reputable encrypted password manager instead.
 
-1. [Explain how to choose a password length.]
-2. [Explain how to select character types or other options.]
-3. [Explain how to generate and copy or save a password.]
+Copied passwords may also remain in the system clipboard or clipboard history.
 
-Avoid adding real passwords, secrets, or personal information to screenshots,
-examples, issue reports, or test fixtures.
+## Strength and cracking-time estimates
 
-## Security and privacy
+The strength label is a simple heuristic based on password length and whether
+it contains uppercase letters, lowercase letters, digits, and punctuation. It
+is not a security audit. The app also warns when a password matches its small,
+built-in common-password list; not appearing on that list does not mean a
+password is safe.
 
-Password generators handle sensitive output. Before release, document and verify:
+The cracking-time estimate assumes a random password and 10 billion guesses per
+second, and estimates the average search time. Actual attack speeds vary, and
+human-chosen passwords or reused passwords can be much easier to guess. Treat
+the estimate as illustrative, not a guarantee.
 
-- The source of randomness used to generate passwords. Use a
-  cryptographically secure random number generator; do not use general-purpose
-  pseudo-random functions for password generation.
-- Whether generated passwords are stored, logged, transmitted, or included in
-  analytics. State only what the implementation guarantees.
-- How clipboard use works, including any platform limitations or clearing behavior.
-- How to report a security issue privately. See [SECURITY.md](SECURITY.md).
+## Development and testing
 
-Do not describe this application as secure or claim that passwords never leave
-the device until those claims have been verified against the implementation.
-
-## Development
-
-1. Clone the repository.
-2. Install dependencies using the project's package manager.
-3. Run the project's test and lint commands.
-
-Replace these general steps with the exact commands and development workflow.
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidance.
-
-## Tests
-
-```text
-[Add the project's test command.]
-```
-
-Include tests for password length, enabled and disabled character sets, edge
-cases, and the randomness implementation. Tests should not print or persist
-generated secrets.
+There is currently no automated test suite or separate build/install step.
+The application can be launched directly with the command above.
 
 ## License
 
-[Add the chosen license and link to its license file.]
+No license has been specified.
